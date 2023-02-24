@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Калькулятор на JavaScript</title>
+</head>
+<body>
+	<h2>Калькулятор ПРОТОТИП</h2>
+	<input type="text" id="display" > <! ТУТ ПЕРВОЕ ОКНО ВВОДА>
+	<input type="text" id="OutDisplay"  disabled><!ТУТ ИТОГОВЫЙ РЕЗ ПОЛУЧАЕМ>
+	
+	<br>
+	<button onclick="addToDisplay('7')">7</button>
+	<button onclick="addToDisplay('8')">8</button>
+	<button onclick="addToDisplay('9')">9</button>
+	<button onclick="addToDisplay('+')">+</button>
+	<button onclick="backspace()"><-</button>
+	<br>
+	<button onclick="addToDisplay('4')">4</button>
+	<button onclick="addToDisplay('5')">5</button>
+	<button onclick="addToDisplay('6')">6</button>
+	<button onclick="addToDisplay('-')">-</button>
+	<br>
+	<button onclick="addToDisplay('1')">1</button>
+	<button onclick="addToDisplay('2')">2</button>
+	<button onclick="addToDisplay('3')">3</button>
+	<button onclick="addToDisplay('*')">*</button>
+	<br>
+	<button onclick="addToDisplay('0')">0</button>
+	<button onclick="addToDisplay('.')">.</button>
+	<button onclick="clearDisplay()">C</button>
+	<button onclick="addToDisplay('/')">/</button>
+	<br>
+	<button onclick="calculate()">=</button>
+	<button onclick="addToDisplay('(')">(</button>
+	<button onclick="addToDisplay(')')">)</button>
+	<button onclick="addToDisplay('sin(')">sin</button>
+	<button onclick="addToDisplay('cos(')">cos</button>
+	<button onclick="addToDisplay('tan(')">tan</button>
+	<br>
+	<button onclick="addToDisplay('asin(')">asin</button>
+	<button onclick="addToDisplay('acos(')">acos</button>
+	<button onclick="addToDisplay('atan(')">atan</button>
+	<button onclick="addToDisplay('sqrt(')">sqrt</button>
+	<br>
+	<button onclick="addToDisplay('log(')">log</button>
+	<!button onclick="addToDisplay('pi')">π</button>
+	<button onclick="addToDisplay('e(')">e</button>
+	
+	<br>
+	<button onclick="addToDisplay('Math.asin(')">asin</button>
+	<button onclick="addToDisplay('Math.acos(')">acos</button>
+	<button onclick="addToDisplay('Math.atan(')">atan</button>
+	<br>
+	<button onclick="addToDisplay('Math.log(')">log</button>
+	<button onclick="addToDisplay('Math.PI')">π</button>
+	<button onclick="addToDisplay('Math.E')">e</button>
+
+	
+	<script src="coreScript.js">/*скрипт реализации ядра*/</script>
+
+	<!script src="coreInet.js">/*скрипт реализации c инета*/</script>
+	
+	<script>
+	function addToDisplay(value) {
+		document.getElementById('display').value += value;
+		}
+
+function calculate() {
+  let input = document.getElementById('display').value;
+ 
+  // Заменяем сокращенные обозначения на выражения с углом в радианах
+  input = input.replace(/sin\(([\d.]+)\)/g, "Math.sin($1 * Math.PI / 180)");
+  input = input.replace(/cos\(([\d.]+)\)/g, "Math.cos($1 * Math.PI / 180)");
+  input = input.replace(/tan\(([\d.]+)\)/g, "Math.tan($1 * Math.PI / 180)");
+
+  let result;
+  
+  try {
+
+    //result = eval(input);//подправить - возможно на скрипт:
+	//result = calculateInet(input);//если взять из синтетического кода НО чото пишет ошибку
+	result = calculate2(input);//потом добавить доп функцию обработчик(calculate 2 -скрипт ядра,(не забіть его переименовать в 2х местах внутри))
+    /*calculate2 взято из coreSript.js; ПОТОМ ДОБАВИТЬ ЕСЛИ ШО ОБРАБОТЧИК-описание в файле обработчик.txt(но пока не нужно)*/
+	document.getElementById('OutDisplay').value = result.toString().replace(/Math\./g, '');
+  } catch (error) {
+    document.getElementById('OutDisplay').value = 'Ошибка';
+  }
+}
+
+
+
+function backspace() {// функция реализации стирания на один символ "<-"
+		let result = document.getElementById("display").value
+		document.getElementById("display").value = result.slice(0, -1);
+	}
+
+function clearDisplay() {//функционал кнопки "С"
+	document.getElementById('OutDisplay').value = '';
+  document.getElementById('display').value = '';
+}
+// Функция для вычисления экспоненты
+/*function exp(x) {
+  return Math.exp(x);
+}*/
+
+// Функция для вычисления натурального логарифма
+/*function log(x) {
+  return Math.log(x);
+}*/
+
+// Функция для вычисления квадратного корня
+/*function sqrt(x) {
+  return Math.sqrt(x);
+}*/
+
+// Функция для вычисления арксинуса
+/*function asin(x) {
+  return Math.asin(x);
+}*/
+
+// Функция для вычисления арккосинуса
+/*function acos(x) {
+  return Math.acos(x);
+}*/
+
+// Функция для вычисления арктангенса
+/*function atan(x) {
+  return Math.atan(x);
+}*/
+
+
+/*Реализация доп кликов*/
+/*document.getElementById('pi').onclick = function() {
+  addToDisplay('pi');
+};
+
+*//*document.getElementById('e').onclick = function() {
+  addToDisplay('e');
+};/*
+
+document.getElementById('log').onclick = function() {
+  addToDisplay('log(');
+};
+
+document.getElementById('sqrt').onclick = function() {
+  addToDisplay('sqrt(');
+};
+
+document.getElementById('asin').onclick = function() {
+  addToDisplay('asin(');
+};
+
+document.getElementById('acos').onclick = function() {
+  addToDisplay('acos(');
+};
+
+document.getElementById('atan').onclick = function() {
+  addToDisplay('atan(');
+};*/
+	</script>
+
+</body>
+</html>
